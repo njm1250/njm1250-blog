@@ -15,6 +15,7 @@ public class AppStartupRunner {
             TestEntity testEntity = new TestEntity();
             testEntity.setIduser(1L); // 예시로 ID를 설정합니다.
             // 여기서는 TestService 클래스의 createTest 메서드를 호출하여 데이터베이스에 데이터를 저장합니다.
+            // mac
             testService.createTest(testEntity.getIduser());
         };
     }
