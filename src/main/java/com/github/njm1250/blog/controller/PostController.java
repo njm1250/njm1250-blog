@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PostController {
 
-    @GetMapping
+    @GetMapping("/")
     public String test() {
         return "test";
     }
+
+    @GetMapping("/api/post")
+    public String post() {
+        return "post";
+    }
+
 }
