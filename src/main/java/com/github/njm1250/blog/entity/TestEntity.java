@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class TestEntity {
 
     @Id // 이 필드가 테이블의 기본 키임을 나타냅니다.
-    @GeneratedValue(strategy = GenerationType.AUTO) // 기본 키가 자동 생성됨을 나타냅니다.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id; // 이 필드는 test 테이블의 iduser 컬럼에 매핑됩니다.
 
     // 추가 필드는 해당 테이블의 다른 컬럼을 나타냅니다.
@@ -17,11 +17,11 @@ public class TestEntity {
     }
 
     // getters and setters
-    public Long getIduser() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setIduser(Long iduser) {
+    public void setUser_id(Long iduser) {
         this.user_id = iduser;
     }
 

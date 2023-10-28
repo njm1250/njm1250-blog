@@ -18,9 +18,8 @@ public class TestService {
     }
 
     @Transactional
-    public TestEntity createTest(Long iduser) {
+    public TestEntity createTest() {
         TestEntity test = new TestEntity();
-        test.setIduser(iduser);
         return testRepository.save(test); // 데이터베이스에 엔티티를 저장합니다.
     }
 }
