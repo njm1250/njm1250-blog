@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="/js/register.js"></script>
+</head>
+
+<body>
+
+<form onsubmit="event.preventDefault(); registerUser();">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="rawPassword">
+
+    <!-- 기타 필요한 필드를 여기에 추가하실 수 있습니다. -->
+
+    <input type="submit" value="Register">
+</form>
+
+</body>
+
+</html>

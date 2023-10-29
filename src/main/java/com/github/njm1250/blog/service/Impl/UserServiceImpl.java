@@ -3,7 +3,6 @@ package com.github.njm1250.blog.service.Impl;
 import com.github.njm1250.blog.dto.UserDTO;
 import com.github.njm1250.blog.entity.User;
 import com.github.njm1250.blog.repository.UserRepository;
-import com.github.njm1250.blog.service.TestService;
 import com.github.njm1250.blog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,9 @@ public class UserServiceImpl implements UserService {
                 .username(userDTO.getUsername())
                 .passwordHash(encodedPassword)
                 .profileImage(userDTO.getProfileImage())
+                .isAdmin(false)
                 .build();
+        logger.debug("registed username : {}", userDTO.getUsername());
         userRepository.save(user);
     }
 

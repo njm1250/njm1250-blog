@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping("/api/v1/users")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
+        //TODO user form validation 해야함
         userService.registerUser(userDTO);
         return ResponseEntity.status(201).body("User created successfully");
     }

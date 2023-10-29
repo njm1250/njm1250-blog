@@ -43,7 +43,7 @@ public class User {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    @Column(name = "isAdmin", nullable = false)
+    @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin = false;
 
     @Builder
