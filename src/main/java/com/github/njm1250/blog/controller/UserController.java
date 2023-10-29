@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/users")
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> register(@Valid @RequestBody UserDTO userDTO) {
         //TODO user form validation 해야함
         userService.registerUser(userDTO);
         return ResponseEntity.status(201).body("User created successfully");

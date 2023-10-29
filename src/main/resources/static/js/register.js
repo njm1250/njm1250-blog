@@ -14,15 +14,17 @@ function registerUser() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.text().then(text => {
+                throw new Error(text);
+            });
         }
         return response.text();
     })
     .then(message => {
-        alert(message); // "User created successfully" 출력
+        alert(message);
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error occurred while registering.');
+        alert(error.message);  // 백엔드에서 반환한 유효성 검사 실패 메시지
     });
 }
