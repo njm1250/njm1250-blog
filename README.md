@@ -1,5 +1,9 @@
 # ✍️ Personal Blog Project
 
+## 🚀 프로젝트 개요
+
+이 부분에 프로젝트의 목적, 주요 기능 등 프로젝트에 대한 간략한 설명을 추가합니다.
+
 ## 🛠 기술 스택
 
 **Backend**
@@ -14,10 +18,14 @@
 - ![HTML](https://img.shields.io/badge/HTML-5-red)
 - ![JavaScript](https://img.shields.io/badge/JavaScript-latest-yellow)
 
-## 설치 및 실행방법
-- localhost로 자기만의 블로그를 개인이 할수있도록 안내추가
+## 🔧 설치 및 실행 방법
+
+1. **레포지토리 클론하기**
+   ```bash
+   git clone [레포지토리 주소]
 
 ## 📝 커밋 컨벤션
+
 - `feat`: ✨ 새로운 기능 추가
 - `fix`: 🐛 버그 수정
 - `docs`: 📚 문서 수정
