@@ -18,6 +18,8 @@
 - ![HTML](https://img.shields.io/badge/HTML-5-red)
 - ![JavaScript](https://img.shields.io/badge/JavaScript-latest-yellow)
 
+- 
+
 ## 🔧 설치 및 실행 방법
 
 1. **레포지토리 클론하기**
@@ -39,4 +41,11 @@
 - `chore`: 🧹 빌드 업무 수정, 패키지 매니저 수정
 - `rename`: 🏷 파일 혹은 폴더명을 수정만 한 경우
 - `remove`: 🗑 파일을 삭제만 한 경우
+
+## 📜 API 명세서
+
+- [POST] `/api/v1/users/register` : 회원가입
+
+---
+
 
