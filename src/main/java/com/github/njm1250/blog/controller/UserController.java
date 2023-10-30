@@ -1,6 +1,6 @@
 package com.github.njm1250.blog.controller;
 
-import com.github.njm1250.blog.dto.UserDTO;
+import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +19,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/api/v1/users")
-    public ResponseEntity<String> register(@Valid @RequestBody UserDTO userDTO) {
+    @PostMapping("/api/v1/users/register")
+    public ResponseEntity<String> register(@Valid @RequestBody UserDto userDto) {
         //TODO user form validation 해야함
-        userService.registerUser(userDTO);
+        userService.registerUser(userDto);
         return ResponseEntity.status(201).body("User created successfully");
     }
 }

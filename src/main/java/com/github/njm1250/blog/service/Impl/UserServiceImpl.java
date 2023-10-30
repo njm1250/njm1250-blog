@@ -1,6 +1,6 @@
 package com.github.njm1250.blog.service.Impl;
 
-import com.github.njm1250.blog.dto.UserDTO;
+import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.entity.User;
 import com.github.njm1250.blog.repository.UserRepository;
 import com.github.njm1250.blog.service.UserService;
@@ -27,15 +27,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void registerUser(UserDTO userDTO) {
-        String encodedPassword = encodePassword(userDTO.getRawPassword());
+    public void registerUser(UserDto userDto) {
+        String encodedPassword = encodePassword(userDto.getRawPassword());
         User user = User.builder()
-                .username(userDTO.getUsername())
+                .username(userDto.getUsername())
                 .passwordHash(encodedPassword)
-                .profileImage(userDTO.getProfileImage())
+                .profileImage(userDto.getProfileImage())
                 .isAdmin(false)
                 .build();
-        logger.debug("registed username : {}", userDTO.getUsername());
+        logger.debug("registed username : {}", userDto.getUsername());
         userRepository.save(user);
     }
 

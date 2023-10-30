@@ -1,7 +1,7 @@
 package com.github.njm1250.blog.service;
 
-import com.github.njm1250.blog.dto.UserDTO;
+import com.github.njm1250.blog.dto.UserDto;
 
 public interface UserService {
-    void registerUser(UserDTO userDTO);
+    void registerUser(UserDto userDto);
 }

@@ -1,6 +1,6 @@
 package com.github.njm1250.blog.user;
 
-import com.github.njm1250.blog.dto.UserDTO;
+import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.entity.User;
 import com.github.njm1250.blog.repository.UserRepository;
 import com.github.njm1250.blog.service.Impl.UserServiceImpl;
@@ -33,7 +33,7 @@ class UserServiceImplTest {
     @Test
     void registerUser() {
         // Given
-        UserDTO userDTO = UserDTO.builder()
+        UserDto userDTO = UserDto.builder()
                 .username("testUser")
                 .rawPassword("testPassword")
                 .build();

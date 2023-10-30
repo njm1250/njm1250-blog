@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
-public class UserDTO {
+public class UserDto {
 
     private Long userId;
     @NotBlank(message = "유저네임이 빈 값입니다.")

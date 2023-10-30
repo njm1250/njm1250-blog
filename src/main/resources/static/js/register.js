@@ -2,7 +2,7 @@ function registerUser() {
     const username = document.getElementById('username').value;
     const rawPassword = document.getElementById('password').value;
 
-    fetch('/api/v1/users', {
+    fetch('/api/v1/users/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
