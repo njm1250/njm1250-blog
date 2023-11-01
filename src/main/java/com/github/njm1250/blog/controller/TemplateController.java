@@ -11,4 +11,9 @@ public class TemplateController {
         return "register";
     }
 
+    @GetMapping("/post")
+    public String post() {
+        return "post";
+    }
+
 }
