@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class UserDto {
 
     private Long userId;
+
     @NotBlank(message = "유저네임이 빈 값입니다.")
     @Size(min = 2, max = 12, message = "유저네임은 2글자에서 12글자 사이여야 합니다")
     private String username;

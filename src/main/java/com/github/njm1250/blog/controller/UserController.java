@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/api/v1/users/status")
-    public ResponseEntity<?> getLoginStatus(HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> getLoginStatus(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             User user = (User) session.getAttribute("user");
