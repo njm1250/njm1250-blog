@@ -11,9 +11,14 @@ public class TemplateController {
         return "home";
     }
 
-    @GetMapping("/register")
-    public String register() {
+    @GetMapping("/signup")
+    public String signup() {
         return "register";
+    }
+
+    @GetMapping("/custom-login")
+    public String customLogin() {
+        return "custom-login";
     }
 
     @GetMapping("/post")

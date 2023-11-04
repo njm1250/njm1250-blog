@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/js/home.js"></script>
-    <title>블로그 스타일의 포스트 작성</title>
+    <title>준혁의 블로그</title>
     <style>
       .post-list {
         margin: 20px;
@@ -84,26 +84,15 @@
 <body>
 
 <div class="navbar">
-    <div class="container">
-        <button id="writePost">글쓰기</button>
-        <a href="#login">로그인</a>
+    <div class="container" style="display: flex; justify-content: flex-end;">
+        <a id="a_username" style="margin-right: right;">사용자명</a>
+        <button id="writePost" onclick="location.href='/post'">글쓰기</button>
+        <button id="btn_login" onclick="location.href='/custom-login'">로그인</button>
+        <button id="btn_logout" onclick="logout()" style="display: none;">로그아웃</button>
     </div>
 </div>
 
 <div class="container">
-    <!-- 포스트 작성 폼 -->
-    <div class="post-form" id="postForm" style="display:none;">
-        <h1>새 포스트 작성</h1>
-        <form onsubmit="event.preventDefault(); submitPost();">
-            <label for="title">제목:</label>
-            <input type="text" id="title" name="title" required>
-
-            <label for="content">내용:</label>
-            <textarea id="content" name="content" required></textarea>
-
-            <input type="submit" value="포스트 등록">
-        </form>
-    </div>
     <div id="posts-container">
         <h2>최근 게시글</h2>
         <ul class="post-list">

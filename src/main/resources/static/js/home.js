@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    document.getElementById('a_username').style.display = 'none';
+    document.getElementById('btn_login').style.display = 'block';
+    // 로그인 상태 확인
+    fetch('/api/v1/users/status', {
+        credentials: 'include' // 쿠키를 포함한 요청을 보내려면 이 옵션이 필요
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.loggedIn) {
+            document.getElementById('a_username').textContent = data.username;
+            document.getElementById('a_username').style.display = 'block';
+            document.getElementById('btn_login').style.display = 'none';
+            document.getElementById('btn_logout').style.display = 'block';
+            document.getElementById('writePost').style.display = 'block';
+            if (data.isAdmin) {
+                document.getElementById('writePost').style.display = 'block';
+            } else {
+                document.getElementById('writePost').style.display = 'none';
+            }
+        } else {
+            document.getElementById('a_username').style.display = 'none';
+            document.getElementById('btn_login').style.display = 'block';
+            document.getElementById('btn_logout').style.display = 'none';
+            document.getElementById('writePost').style.display = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching login status:', error);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     // 글쓰기 버튼 클릭 이벤트 핸들러
     document.getElementById('writePost').addEventListener('click', function() {
         var form = document.getElementById('postForm');
@@ -12,32 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 });
 
-function submitPost() {
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-
-    fetch('/api/v1/blog/post', {
+function logout() {
+    fetch('/api/v1/users/logout', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title: title,
-            content: content
-        })
+        credentials: 'include' // 쿠키를 포함한 요청을 보내려면 이 옵션이 필요합니다.
     })
     .then(response => {
-        if(response.ok) {
-            return response.json(); // 서버가 JSON 응답을 반환하는 경우
+        if (response.ok) {
+            // 로그아웃 성공 시, UI 업데이트 및 리다이렉트
+            alert('로그아웃 되었습니다.');
+            window.location.href = '/home'; // 로그인 페이지로 리다이렉트
+        } else {
+            throw new Error('로그아웃 처리에 실패하였습니다.');
         }
-        throw new Error('Network response was not ok.');
-    })
-    .then(data => {
-        console.log(data); // 성공적으로 데이터를 받으면 여기에서 처리
-        // 예를 들어 게시글 목록 페이지로 리디렉션 하거나 성공 메시지를 표시할 수 있습니다.
     })
     .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-        // 오류 처리 로직
+        console.error('Error:', error);
     });
 }
+

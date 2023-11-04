@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>블로그 포스팅</title>
-    <style>
+  <meta charset="UTF-8">
+  <script src="/js/post.js"></script>
+  <title>새 포스트 작성</title>
+  <style>
         body {
             font-family: 'Arial', sans-serif;
-            padding: 50px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
-
         .container {
-            max-width: 600px;
+            background: #fff;
+            border-radius: 5px;
+            padding: 20px;
             margin: 0 auto;
+            max-width: 800px;
         }
-
-        .input-container {
-            margin-bottom: 20px;
+        h1 {
+            text-align: center;
         }
-
+        form {
+            display: flex;
+            flex-direction: column;
+        }
         label {
-            display: block;
-            margin-bottom: 5px;
+            margin-top: 10px;
         }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
+        input[type="text"],
         textarea {
-            height: 200px;
-            resize: vertical;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
-
-        button {
-            padding: 10px 15px;
-            background-color: #007BFF;
+        textarea {
+            height: 150px;
+        }
+        input[type="submit"] {
+            background-color: #5cb85c;
             color: white;
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            margin-top: 20px;
         }
-
-        button:hover {
-            background-color: #0056b3;
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
         }
     </style>
 </head>
-
 <body>
 <div class="container">
-    <h2>블로그 포스팅</h2>
-    <form action="post_url_here" method="POST"> <!-- 'post_url_here' 부분을 실제 포스팅 처리 URL로 교체해야 합니다. -->
-        <div class="input-container">
-            <label for="title">글 제목</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="input-container">
-            <label for="content">글 내용</label>
-            <textarea id="content" name="content" required></textarea>
-        </div>
-        <button type="submit">올리기</button>
-    </form>
+  <h1>새 포스트 작성</h1>
+  <form id="postForm" onsubmit="event.preventDefault(); submitPost();">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="content">내용:</label>
+    <textarea id="content" name="content" required></textarea>
+
+    <input type="submit" value="포스트 등록">
+  </form>
 </div>
 </body>
-
 </html>

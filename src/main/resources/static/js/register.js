@@ -1,8 +1,8 @@
-function registerUser() {
+function signupUser() {
     const username = document.getElementById('username').value;
     const rawPassword = document.getElementById('password').value;
 
-    fetch('/api/v1/users/register', {
+    fetch('/api/v1/users/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -22,6 +22,7 @@ function registerUser() {
     })
     .then(message => {
         alert(message);
+        window.location.href = '/custom-login'; // 로그인 페이지로 리디렉션합니다.
     })
     .catch(error => {
         console.error('Error:', error);

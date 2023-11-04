@@ -42,7 +42,7 @@ class UserServiceImplTest {
         when(userRepository.save(any(User.class))).thenReturn(null); // or any desired return value
 
         // When
-        userService.registerUser(userDTO);
+        userService.signupUser(userDTO);
 
         // Then
         verify(passwordEncoder, times(1)).encode("testPassword");
