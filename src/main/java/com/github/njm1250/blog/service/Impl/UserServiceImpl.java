@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     @Transactional
     public void registerUser(UserDto userDto) {
@@ -42,6 +41,5 @@ public class UserServiceImpl implements UserService {
     public String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }
-
 
 }

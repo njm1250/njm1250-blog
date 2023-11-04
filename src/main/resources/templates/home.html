@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/home.js"></script>
+    <title>블로그 스타일의 포스트 작성</title>
+    <style>
+      .post-list {
+        margin: 20px;
+        padding: 0;
+      }
+      .post {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        list-style-type: none;
+      }
+      .post-title {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      .post-summary {
+        margin-top: 5px;
+      }
+      .post-metadata {
+        color: #777;
+        font-size: 0.8em;
+      }
+        /* 이전 스타일 정의 */
+        body, h1, form, input, textarea, button {
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+            padding: 15px 0;
+        }
+        .navbar a, .navbar button {
+            float: right;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .post-form {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="container">
+        <button id="writePost">글쓰기</button>
+        <a href="#login">로그인</a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 포스트 작성 폼 -->
+    <div class="post-form" id="postForm" style="display:none;">
+        <h1>새 포스트 작성</h1>
+        <form onsubmit="event.preventDefault(); submitPost();">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required></textarea>
+
+            <input type="submit" value="포스트 등록">
+        </form>
+    </div>
+    <div id="posts-container">
+        <h2>최근 게시글</h2>
+        <ul class="post-list">
+            <!-- 게시글 목록 예시 -->
+            <li class="post">
+                <div class="post-title">포스트 제목 1</div>
+                <div class="post-summary">포스트 요약 내용입니다...</div>
+                <div class="post-metadata">작성자: 홍길동 | 작성일: 2023-11-04</div>
+            </li>
+            <li class="post">
+                <div class="post-title">포스트 제목 2</div>
+                <div class="post-summary">다른 포스트의 요약 내용입니다...</div>
+                <div class="post-metadata">작성자: 이순신 | 작성일: 2023-11-03</div>
+            </li>
+            <!-- 반복될 포스트 목록 -->
+            <!-- 실제로는 서버 측 데이터를 기반으로 동적으로 생성되어야 함 -->
+        </ul>
+    </div>
+    <!-- 여기에 기존 포스트가 표시될 수 있습니다. -->
+</div>
+</body>
+</html>
