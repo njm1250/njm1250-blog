@@ -44,8 +44,12 @@
 
 ## 📜 API 명세서
 
-- [POST] `/api/v1/users/register` : 회원가입
-
+- [POST] `/api/v1/users/signup` : 회원가입
+- [POST] `/api/v1/users/login` : 로그인
+- [POST] `/api/v1/users/logout` : 로그아웃
+- [GET]  `/api/v1/users/status` : 로그인 정보를 세션에 저장
+- [POST] `/api/v1/blog/post` : 글 등록
+- [POST] `/api/v1/blog/getPosts` : 작성 글 조회
 ---
 
 
