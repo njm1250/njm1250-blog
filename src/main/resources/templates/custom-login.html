@@ -6,19 +6,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/custom-login.js"></script>
   <title>Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    form#loginForm {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box; /* So that width includes padding */
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #5cb85c;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 5px;
+    }
+
+    button#signup {
+      background-color: #f0ad4e;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    br {
+      clear: both;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Login</h2>
 <form id="loginForm">
-  <label for="username">Username:</label>
+  <label for="username">Username</label>
   <input type="text" id="username" name="username" required>
-  <br><br>
-  <label for="password">Password:</label>
+  <br>
+  <label for="password">Password</label>
   <input type="password" id="password" name="password" required>
-  <br><br>
+  <br>
   <button type="submit">Login</button>
-  <button id="signup" onclick="location.href='/signup'">signup</button>
+  <button type="button" id="signup" onclick="location.href='/signup'">Sign up</button>
 </form>
+
 </body>
 </html>

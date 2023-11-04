@@ -29,6 +29,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // 로그인 정보를 세션에 저장
     @GetMapping("/api/v1/users/status")
     public ResponseEntity<Map<String, Object>> getLoginStatus(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -45,18 +46,21 @@ public class UserController {
         return ResponseEntity.ok(Collections.singletonMap("loggedIn", false));
     }
 
+    // 회원가입
     @PostMapping("/api/v1/users/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody UserDto userDto) {
         userService.signupUser(userDto);
         return ResponseEntity.status(201).body("User created successfully");
     }
 
+    // 로그아웃
     @PostMapping("/api/v1/users/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
-        return ResponseEntity.ok().build(); // 성공 응답
+        return ResponseEntity.ok().build();
     }
 
+    // 로그인
     @PostMapping("/api/v1/users/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserDto userDto, HttpSession session) {
         try {
