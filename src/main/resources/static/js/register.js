@@ -21,8 +21,8 @@ function signupUser() {
         return response.text();
     })
     .then(message => {
-        alert(message);
-        window.location.href = '/custom-login'; // 로그인 페이지로 리디렉션합니다.
+        alert("회원가입 완료. 다시 로그인 해주세요");
+        window.location.href = '/custom-login';
     })
     .catch(error => {
         console.error('Error:', error);

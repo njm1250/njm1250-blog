@@ -21,7 +21,7 @@ function submitPost() {
         return response.text();
     })
     .then(message => {
-        alert(message);
+        alert("글 작성 완료");
         window.location.href = '/home';
     })
     .catch(error => {

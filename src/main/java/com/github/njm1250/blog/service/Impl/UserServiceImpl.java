@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -39,6 +41,11 @@ public class UserServiceImpl implements UserService {
         if (!verifyPassword (userDto.getRawPassword(), user.getPasswordHash())) {
             throw new InvalidCredentialsException("잘못된 비밀번호입니다.");
         }
+
+        // 사용자 인증이 성공한 후, 마지막 로그인 시간 업데이트
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
+
         return user;
     }
 
