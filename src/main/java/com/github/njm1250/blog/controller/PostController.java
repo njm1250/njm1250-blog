@@ -12,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PostController {
@@ -29,6 +28,26 @@ public class PostController {
     @Autowired
     public PostController(PostRepository postRepository) {
         this.postRepository = postRepository;
+    }
+
+    @GetMapping("/api/v1/blog/getPosts")
+    public ResponseEntity<List<PostDto>> getPosts() {
+        List<Object[]> results = postRepository.findPostsByAdminUsers();
+        List<PostDto> postDtos = results.stream()
+                .map(result -> {
+                    Post post = (Post) result[0]; // SELECT p(Post)
+                    String username = (String) result[1]; // SELECT u.username(User)
+                    return PostDto.builder()
+                            .postId(post.getPostId())
+                            .title(post.getTitle())
+                            .content(post.getContent())
+                            .username(username)
+                            .writtenDate(post.getWrittenDate())
+                            .lastModified(post.getLastModified())
+                            .build();
+                })
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(postDtos);
     }
 
     @PostMapping("/api/v1/blog/post")
@@ -50,6 +69,4 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the post");
         }
     }
-
-
 }

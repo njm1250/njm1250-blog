@@ -19,6 +19,7 @@ public class PostDto {
     private String title;
     @NotBlank(message = "내용이 빈 값입니다.")
     private String content;
+    private String username;
     private LocalDateTime writtenDate;
     private LocalDateTime lastModified;
 }

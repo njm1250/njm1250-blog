@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/v1/blog/getPosts') // 서버에 요청하는 URL
+        .then(response => response.json()) // 응답을 JSON으로 파싱
+        .then(posts => {
+            const postsContainer = document.querySelector('.post-list');
+            posts.forEach(post => {
+                const postElement = `
+                    <li class="post">
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-summary">${post.content}</div>
+                        <div class="post-metadata">작성자: ${post.username} | 작성일: ${post.writtenDate}</div>
+                    </li>
+                `;
+                postsContainer.insertAdjacentHTML('beforeend', postElement);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('a_username').style.display = 'none';
     document.getElementById('btn_login').style.display = 'block';
