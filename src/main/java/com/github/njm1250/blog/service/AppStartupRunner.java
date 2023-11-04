@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AppStartupRunner {
 
     @Bean
-    public CommandLineRunner commandLineRunner(TestService testService) {
+    public CommandLineRunner commandLineRunner() {
         return args -> {
 
         };
