@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const date = new Date(post.writtenDate);
                 const dateString = date.toLocaleString();
                 const postElement = `
-                    <a href="/post_details?post_id=${post.postId}">
+                    <a href="/post_details?postId=${post.postId}">
                         <li class="post">
                             <div class="post-title">${post.title}</div>
                             <div class="post-summary">${post.content}</div>

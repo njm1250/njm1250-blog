@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -33,11 +34,16 @@ public class PostController {
     }
 
     // 글 상세 조회
-    @GetMapping("/postDetail")
-    public ResponseEntity<PostDto> getDetailPost(@RequestParam(name = "postId") Long postId) {
-        PostDto postDto = postService.getPostDtoById(postId);
-        return ResponseEntity.ok(postDto);
+    @GetMapping("/post_details")
+    public ResponseEntity<?> getDetailPost(@RequestParam(name = "postId") Long postId) {
+        try {
+            PostDto postDto = postService.getPostDtoById(postId);
+            return ResponseEntity.ok(postDto);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
+
 
     // 블로그 관리자가 작성한 글 조회
     @GetMapping("/api/v1/blog/getPosts")
