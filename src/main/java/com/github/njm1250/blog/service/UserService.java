@@ -5,5 +5,5 @@ import com.github.njm1250.blog.entity.User;
 
 public interface UserService {
     void signupUser(UserDto userDto);
-    User loginUser(UserDto userDto);
+    UserDto loginUser(UserDto userDto);
 }

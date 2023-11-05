@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User loginUser(UserDto userDto) {
+    public UserDto loginUser(UserDto userDto) {
         Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
         if (!userOptional.isPresent()) {
             throw new InvalidCredentialsException("사용자를 찾을 수 없습니다.");
@@ -46,7 +46,13 @@ public class UserServiceImpl implements UserService {
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
 
-        return user;
+        UserDto loggedInUserDto = UserDto.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .isAdmin(user.getIsAdmin())
+                .build();
+
+        return loggedInUserDto;
     }
 
     @Override

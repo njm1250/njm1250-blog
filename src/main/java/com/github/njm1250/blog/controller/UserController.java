@@ -35,12 +35,12 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getLoginStatus(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            User user = (User) session.getAttribute("user");
-            if (user != null) {
+            UserDto userDto = (UserDto) session.getAttribute("user");
+            if (userDto != null) {
                 Map<String, Object> status = new HashMap<>();
                 status.put("loggedIn", true);
-                status.put("username", user.getUsername());
-                status.put("isAdmin", user.getIsAdmin());
+                status.put("username", userDto.getUsername());
+                status.put("isAdmin", userDto.getIsAdmin());
                 return ResponseEntity.ok(status);
             }
         }
@@ -65,7 +65,7 @@ public class UserController {
     @PostMapping("/api/v1/users/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserDto userDto, HttpSession session) {
         try {
-            User loggedUser = userService.loginUser(userDto);
+            UserDto loggedUser = userService.loginUser(userDto);
             session.setAttribute("user", loggedUser);
             return ResponseEntity.ok("Login successful");
         } catch (InvalidCredentialsException e) {
