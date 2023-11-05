@@ -38,7 +38,6 @@ public class User {
     @Column(name = "profile_image")
     private String profileImage;
 
-    //TODO 어떻게 구현할지 생각
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 

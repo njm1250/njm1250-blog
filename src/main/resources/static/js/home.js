@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const date = new Date(post.writtenDate);
                 const dateString = date.toLocaleString();
                 const postElement = `
-                    <li class="post">
-                        <div class="post-title">${post.title}</div>
-                        <div class="post-summary">${post.content}</div>
-                        <div class="post-metadata">작성자: ${post.username} | 작성일: ${dateString}</div>
-                    </li>
+                    <a href="/post_details?post_id=${post.postId}">
+                        <li class="post">
+                            <div class="post-title">${post.title}</div>
+                            <div class="post-summary">${post.content}</div>
+                            <div class="post-metadata">작성자: ${post.username} | 작성일: ${dateString}</div>
+                        </li>
+                    </a>
                 `;
                 postsContainer.insertAdjacentHTML('beforeend', postElement);
             });
