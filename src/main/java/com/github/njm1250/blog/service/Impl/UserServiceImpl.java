@@ -33,26 +33,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto loginUser(UserDto userDto) {
-        Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
-        if (!userOptional.isPresent()) {
-            throw new InvalidCredentialsException("사용자를 찾을 수 없습니다.");
-        }
-        User user = userOptional.get();
-        if (!verifyPassword (userDto.getRawPassword(), user.getPasswordHash())) {
+        User user = userRepository.findByUsername(userDto.getUsername())
+                .orElseThrow(() -> new InvalidCredentialsException("사용자를 찾을 수 없습니다."));
+
+        if (!verifyPassword(userDto.getRawPassword(), user.getPasswordHash())) {
             throw new InvalidCredentialsException("잘못된 비밀번호입니다.");
         }
 
-        // 사용자 인증이 성공한 후, 마지막 로그인 시간 업데이트
-        user.setLastLogin(LocalDateTime.now());
-        userRepository.save(user);
-
-        UserDto loggedInUserDto = UserDto.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .isAdmin(user.getIsAdmin())
-                .build();
-
-        return loggedInUserDto;
+        updateLastLoginTime(user);
+        return convertToDto(user);
     }
 
     @Override
@@ -73,11 +62,24 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public String encodePassword(String rawPassword) {
+    private void updateLastLoginTime(User user) {
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
+    }
+
+    private UserDto convertToDto(User user) {
+        return UserDto.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .isAdmin(user.getIsAdmin())
+                .build();
+    }
+
+    private String encodePassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
     }
 
-    public boolean verifyPassword (String rawPassword, String encodedPassword) {
+    private boolean verifyPassword (String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
