@@ -1,6 +1,7 @@
 package com.github.njm1250.blog.controller;
 
 import com.github.njm1250.blog.dto.PostDto;
+import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.entity.Post;
 import com.github.njm1250.blog.entity.User;
 import com.github.njm1250.blog.repository.PostRepository;
@@ -56,7 +57,7 @@ public class PostController {
     @PostMapping("/api/v1/blog/post")
     public ResponseEntity<String> createPost(@Valid @RequestBody PostDto postDto, HttpSession session) {
         try {
-            User user = (User) session.getAttribute("user");
+            UserDto user = (UserDto) session.getAttribute("user");
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
             }

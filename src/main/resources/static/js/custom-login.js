@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       })
       .then(text => {
-        alert('로그인 성공');
         window.location.href = '/home';
       })
       .catch(error => {

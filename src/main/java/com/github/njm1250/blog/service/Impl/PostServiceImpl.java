@@ -1,14 +1,17 @@
 package com.github.njm1250.blog.service.Impl;
 
 import com.github.njm1250.blog.dto.PostDto;
+import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.entity.Post;
 import com.github.njm1250.blog.entity.User;
 import com.github.njm1250.blog.repository.PostRepository;
+import com.github.njm1250.blog.repository.UserRepository;
 import com.github.njm1250.blog.service.PostService;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +25,12 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -50,7 +55,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Post createPost(PostDto postDto, User user) {
+    public Post createPost(PostDto postDto, UserDto userDto) {
+        User user = userRepository.findByUsername(userDto.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Post post = Post.builder()
                 .user(user)
                 .title(postDto.getTitle())
