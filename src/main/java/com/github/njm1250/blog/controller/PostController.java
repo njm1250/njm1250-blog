@@ -34,18 +34,6 @@ public class PostController {
         this.postService = postService;
     }
 
-    // 글 상세 조회
-    @GetMapping("/post_details")
-    public ResponseEntity<?> getDetailPost(@RequestParam(name = "postId") Long postId) {
-        try {
-            PostDto postDto = postService.getPostDtoById(postId);
-            return ResponseEntity.ok(postDto);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
-
     // 블로그 관리자가 작성한 글 조회
     @GetMapping("/api/v1/blog/getPosts")
     public ResponseEntity<List<PostDto>> getPosts() {

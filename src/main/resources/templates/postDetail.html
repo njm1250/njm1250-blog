@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/post.js"></script>
+    <title>게시글 상세보기</title>
+    <style>
+        body, h1, h2, p, a {
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .post-detail {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .post-title {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .post-metadata {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .post-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .comments-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .comment {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .comment:last-child {
+            border-bottom: none;
+        }
+        .comment-title {
+            font-weight: bold;
+            color: #333;
+        }
+        .comment-body {
+            font-size: 0.9em;
+            margin-top: 5px;
+            color: #555;
+        }
+        .comment-metadata {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <article class="post-detail">
+        <h1 class="post-title" th:text="${post.title}">Post Title</h1>
+        <p class="post-metadata">
+            작성자: <span th:text="${post.username}">Username</span> |
+            작성일: <span th:text="${#temporals.format(post.writtenDate, 'yyyy-MM-dd HH:mm')}">Written Date</span>
+        </p>
+        <div class="post-content" th:utext="${post.content}">[Post Content]</div>
+    </article>
+
+
+    <section class="comments-section">
+        <h2>댓글</h2>
+        <!-- 댓글 목록 -->
+        <div class="comment">
+            <div class="comment-title">댓글 제목 1</div>
+            <div class="comment-body">이곳에 댓글 내용이 들어갑니다. 댓글도 여러 문단으로 이루어질 수 있습니다.</div>
+            <div class="comment-metadata">작성자: 김철수 | 작성일: 2023-11-07</div>
+        </div>
+        <!-- 여러 댓글을 위해 .comment 요소를 반복해서 사용하면 됩니다. -->
+    </section>
+</div>
+
+</body>
+</html>
