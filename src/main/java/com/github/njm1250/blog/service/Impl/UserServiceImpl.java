@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserDto loginUser(UserDto userDto) {
         User user = userRepository.findByUsername(userDto.getUsername())
                 .orElseThrow(() -> new InvalidCredentialsException("사용자를 찾을 수 없습니다."));
@@ -47,19 +46,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void signupUser(UserDto userDto) {
-        Optional<User> existingUser = userRepository.findByUsername(userDto.getUsername());
-        if (existingUser.isPresent()) {
-            throw new IllegalStateException("이미 존재하는 사용자명입니다.");
-        }
-        String encodedPassword = encodePassword(userDto.getRawPassword());
+
+        userRepository.findByUsername(userDto.getUsername()).ifPresent(u -> {
+            throw new IllegalStateException("Username already exists");
+        });
+
         User user = User.builder()
                 .username(userDto.getUsername())
-                .passwordHash(encodedPassword)
+                .passwordHash(encodePassword(userDto.getRawPassword()))
                 .profileImage(userDto.getProfileImage())
                 .isAdmin(false)
                 .build();
-        logger.debug("registed username : {}", userDto.getUsername());
+
         userRepository.save(user);
+        logger.debug("Registered username: {}", userDto.getUsername());
     }
 
     private void updateLastLoginTime(User user) {

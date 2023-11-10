@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -35,20 +36,12 @@ public class UserController {
     }
 
     // 로그인 정보를 세션에 저장
-    @GetMapping("/api/v1/users/status")
+    @GetMapping("/status")
     public ResponseEntity<Map<String, Object>> getLoginStatus(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             UserDto userDto = (UserDto) session.getAttribute("user");
             if (userDto != null) {
-
-                Cookie sessionCookie = WebUtils.getCookie(request, "JSESSIONID");
-                if (sessionCookie != null && request.isSecure()) {
-                    sessionCookie.setHttpOnly(true);
-                    sessionCookie.setSecure(true);
-                    response.addCookie(sessionCookie);
-                }
-
                 Map<String, Object> status = new HashMap<>();
                 status.put("loggedIn", true);
                 status.put("username", userDto.getUsername());
@@ -60,14 +53,14 @@ public class UserController {
     }
 
     // 회원가입
-    @PostMapping("/api/v1/users/signup")
+    @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody UserDto userDto) {
         userService.signupUser(userDto);
-        return ResponseEntity.status(201).body("User created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
     // 로그아웃
-    @PostMapping("/api/v1/users/logout")
+    @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -78,7 +71,7 @@ public class UserController {
     }
 
     // 로그인
-    @PostMapping("/api/v1/users/login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserDto userDto, HttpServletRequest request, HttpServletResponse response) {
         try {
             UserDto loggedUser = userService.loginUser(userDto);
@@ -89,16 +82,20 @@ public class UserController {
             request.changeSessionId();
             session.setMaxInactiveInterval(30 * 60); // 30분으로 session timeout 설정
 
-            Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
-            if (request.isSecure()) {
-                sessionCookie.setHttpOnly(true); // HTTPS
-                sessionCookie.setSecure(true); // JS 차단
-                response.addCookie(sessionCookie);
-            }
+            setSecureSessionCookie(request, response, session);
             logger.debug("User {} logged in successfully.", userDto.getUsername());
             return ResponseEntity.ok("Login successful");
         } catch (InvalidCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    private void setSecureSessionCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        if (request.isSecure()) {
+            Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
+            sessionCookie.setHttpOnly(true);
+            sessionCookie.setSecure(true);
+            response.addCookie(sessionCookie);
         }
     }
 
