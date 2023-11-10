@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/v1/blog")
 public class PostController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
@@ -35,14 +36,14 @@ public class PostController {
     }
 
     // 블로그 관리자가 작성한 글 조회
-    @GetMapping("/api/v1/blog/getPosts")
+    @GetMapping("/getPosts")
     public ResponseEntity<List<PostDto>> getPosts() {
         List<PostDto> postDtos = postService.getPostDtosByAdmin();
         return ResponseEntity.ok(postDtos);
     }
 
     // 글 등록
-    @PostMapping("/api/v1/blog/post")
+    @PostMapping("/post")
     public ResponseEntity<String> createPost(@Valid @RequestBody PostDto postDto, HttpSession session) {
         try {
             UserDto user = (UserDto) session.getAttribute("user");

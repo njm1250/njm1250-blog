@@ -38,7 +38,6 @@ public class PostServiceImpl implements PostService {
         List<Object[]> results = postRepository.findPostsByAdminUsers();
         return results.stream()
                 .map(result -> {
-                    logger.debug("============ name : {}, {}", result[0].getClass().getName(), result[0]);
                     Post post = (Post) result[0]; // SELECT p(Post)
                     String username = (String) result[1]; // SELECT u.username(User)
                     return PostDto.builder()
