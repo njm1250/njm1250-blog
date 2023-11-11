@@ -34,11 +34,9 @@ public class UserServiceImpl implements UserService {
     public UserDto loginUser(UserDto userDto) {
         User user = userRepository.findByUsername(userDto.getUsername())
                 .orElseThrow(() -> new InvalidCredentialsException("사용자를 찾을 수 없습니다."));
-
         if (!verifyPassword(userDto.getRawPassword(), user.getPasswordHash())) {
             throw new InvalidCredentialsException("잘못된 비밀번호입니다.");
         }
-
         updateLastLoginTime(user);
         return convertToDto(user);
     }
@@ -46,18 +44,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void signupUser(UserDto userDto) {
-
         userRepository.findByUsername(userDto.getUsername()).ifPresent(u -> {
             throw new IllegalStateException("Username already exists");
         });
-
         User user = User.builder()
                 .username(userDto.getUsername())
                 .passwordHash(encodePassword(userDto.getRawPassword()))
                 .profileImage(userDto.getProfileImage())
                 .isAdmin(false)
                 .build();
-
         userRepository.save(user);
         logger.debug("Registered username: {}", userDto.getUsername());
     }
