@@ -33,9 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto loginUser(UserDto userDto) {
         User user = userRepository.findByUsername(userDto.getUsername())
-                .orElseThrow(() -> new InvalidCredentialsException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new InvalidCredentialsException("User not found"));
         if (!verifyPassword(userDto.getRawPassword(), user.getPasswordHash())) {
-            throw new InvalidCredentialsException("잘못된 비밀번호입니다.");
+            throw new InvalidCredentialsException("Wrong password");
         }
         updateLastLoginTime(user);
         return convertToDto(user);
