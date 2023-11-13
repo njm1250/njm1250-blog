@@ -33,6 +33,7 @@ public class PostServiceImpl implements PostService {
         this.userRepository = userRepository;
     }
 
+    // 관리자가 작성한 글 조회
     @Override
     public List<PostDto> getPostDtosByAdmin() {
         List<Object[]> results = postRepository.findPostsByAdminUsers();
