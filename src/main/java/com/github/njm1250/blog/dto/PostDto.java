@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class PostDto {
 
     private Long postId;
-
     @NotBlank(message = "제목이 빈 값입니다.")
     private String title;
     @NotBlank(message = "내용이 빈 값입니다.")
