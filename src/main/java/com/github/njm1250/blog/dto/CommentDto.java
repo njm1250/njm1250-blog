@@ -17,5 +17,6 @@ public class CommentDto {
     @NotBlank(message = "댓글이 빈 값입니다.")
     private String commentText;
     private LocalDateTime commentDate;
+    private Long parentCommentId;
 
 }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
+@Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,21 +35,17 @@ public class Comment {
     @Column(name = "comment_date", nullable = false, updatable = false)
     private LocalDateTime commentDate;
 
-    @Column(name = "parent_comment_id", nullable = false)
-    private String parentComment;
-
-    /*
-    대댓글 기능. 나중에 구현
+    // 대댓글 기능. 나중에 구현
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
-    private Comment parentComment;
-     */
+    private Comment parentCommentId;
+
 
     @Builder
-    public Comment(Post post, User user, String commentText) {
+    public Comment(Post post, User user, String commentText, Comment parentCommentId) {
         this.post = post;
         this.user = user;
         this.commentText = commentText;
+        this.parentCommentId = parentCommentId;
     }
-
 }
