@@ -12,5 +12,5 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("SELECT c FROM Comment c WHERE c.post.id = :postId")
-    List<CommentDto> findCommentsByPostId(Long postId);
+    List<Comment> findCommentsByPostId(Long postId);
 }

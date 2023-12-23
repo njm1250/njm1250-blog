@@ -105,7 +105,8 @@
 
         <!-- 댓글 등록창 -->
         <form id="commentForm" onsubmit="event.preventDefault(); submitComment();">
-            <textarea name="commentText" rows="4" placeholder="댓글을 입력하세요..." required></textarea>
+            <input type="hidden" id="postId" name="postId" th:value="${post.postId}">
+            <textarea id="commentText" name="commentText" rows="4" placeholder="댓글을 입력하세요..." required></textarea>
             <input type="submit" value="댓글 등록">
         </form>
 

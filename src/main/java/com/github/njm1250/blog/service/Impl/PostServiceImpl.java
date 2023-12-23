@@ -42,11 +42,13 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Comment createComment(CommentDto commentDto, UserDto userDto) {
+        logger.debug("STARTS");
         User user = userRepository.findByUsername(userDto.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         PostProjection postProjection = postRepository.findPostById(commentDto.getPostId())
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
         Post post = postProjection.getPost();
+        logger.debug("POST FOUND");
         Comment comment = Comment.builder()
                 .user(user)
                 .post(post)
@@ -58,9 +60,11 @@ public class PostServiceImpl implements PostService {
                     .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
             comment.setParentComment(parentComment);
         }
+        logger.debug("COMMENT SAVED");
         Comment savedComment = commentRepository.save(comment);
         // 댓글 수 증가
         post.incrementCommentCount();
+        logger.debug("POST SAVED");
         postRepository.save(post);
         return savedComment;
     }
@@ -68,12 +72,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<CommentDto> getCommentDtoListByPostId(Long postId) {
         // TODO 대댓글 기능 추가
-        List<CommentDto> results = commentRepository.findCommentsByPostId(postId);
+        List<Comment> results = commentRepository.findCommentsByPostId(postId);
         return results.stream()
                 .map(result -> {
                     return CommentDto.builder()
-                            .postId(result.getPostId())
-                            .userId(result.getUserId())
+                            .postId(result.getPost().getPostId())
+                            .userId(result.getUser().getUserId())
                             .commentText(result.getCommentText())
                             .commentDate(result.getCommentDate())
                             .build();

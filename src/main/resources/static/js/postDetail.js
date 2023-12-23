@@ -1,4 +1,5 @@
 function submitComment() {
+    const postId = document.getElementById('postId').value;
     const commentText = document.getElementById('commentText').value;
 
     fetch('/api/v1/blog/comment', {
@@ -7,6 +8,7 @@ function submitComment() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            postId: postId,
             commentText: commentText
         })
     })
@@ -20,6 +22,7 @@ function submitComment() {
     })
     .then(message => {
         alert("댓글 등록 완료");
+        window.location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
