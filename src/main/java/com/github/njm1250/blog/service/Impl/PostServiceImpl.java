@@ -1,12 +1,16 @@
 package com.github.njm1250.blog.service.Impl;
 
+import com.github.njm1250.blog.dto.CommentDto;
 import com.github.njm1250.blog.dto.PostDto;
 import com.github.njm1250.blog.dto.UserDto;
+import com.github.njm1250.blog.entity.Comment;
 import com.github.njm1250.blog.entity.Post;
 import com.github.njm1250.blog.entity.User;
+import com.github.njm1250.blog.repository.CommentRepository;
 import com.github.njm1250.blog.repository.PostRepository;
 import com.github.njm1250.blog.repository.UserRepository;
 import com.github.njm1250.blog.service.PostService;
+import com.github.njm1250.blog.utils.PostProjection;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +30,39 @@ public class PostServiceImpl implements PostService {
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
+    }
+
+    @Override
+    @Transactional
+    public Comment createComment(CommentDto commentDto, UserDto userDto) {
+        User user = userRepository.findByUsername(userDto.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        PostProjection postProjection = postRepository.findPostById(commentDto.getPostId())
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        Post post = postProjection.getPost();
+        Comment comment = Comment.builder()
+                .user(user)
+                .post(post)
+                .commentText(commentDto.getCommentText())
+                .build();
+        // 부모댓글이 있으면 해당 댓글을 조회 후 set
+        if (commentDto.getParentCommentId() != null) {
+            Comment parentComment = commentRepository.findById(commentDto.getParentCommentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
+            comment.setParentComment(parentComment);
+        }
+        Comment savedComment = commentRepository.save(comment);
+        // 댓글 수 증가
+        post.incrementCommentCount();
+        postRepository.save(post);
+        return savedComment;
     }
 
     // 관리자가 작성한 글 조회

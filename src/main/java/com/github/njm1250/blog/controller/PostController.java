@@ -1,5 +1,6 @@
 package com.github.njm1250.blog.controller;
 
+import com.github.njm1250.blog.dto.CommentDto;
 import com.github.njm1250.blog.dto.PostDto;
 import com.github.njm1250.blog.dto.UserDto;
 import com.github.njm1250.blog.entity.Post;
@@ -8,6 +9,7 @@ import com.github.njm1250.blog.repository.PostRepository;
 import com.github.njm1250.blog.service.Impl.UserServiceImpl;
 import com.github.njm1250.blog.service.PostService;
 import com.github.njm1250.blog.service.UserService;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,23 @@ public class PostController {
         return ResponseEntity.ok(postDtos);
     }
 
+    // 댓글 등록
+    @PostMapping("/comment")
+    public ResponseEntity<String> createComment(@Valid @RequestBody CommentDto commentDto, HttpSession session) {
+        try {
+            UserDto user = (UserDto) session.getAttribute("user");
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+            }
+            postService.createComment(commentDto, user);
+            return ResponseEntity.ok("Comment created successfully");
+
+        } catch (Exception e) {
+            logger.error("Error while creating comment");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the comment");
+        }
+    }
+
     // 글 등록
     @PostMapping("/post")
     public ResponseEntity<String> createPost(@Valid @RequestBody PostDto postDto, HttpSession session) {
@@ -53,7 +72,7 @@ public class PostController {
             postService.createPost(postDto, user);
             return ResponseEntity.ok("Post created successfully");
         } catch (Exception e) {
-            logger.error("Error creating post", e);
+            logger.error("Error while creating post", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the post");
         }
     }

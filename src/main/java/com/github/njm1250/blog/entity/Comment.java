@@ -38,14 +38,14 @@ public class Comment {
     // 대댓글 기능. 나중에 구현
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
-    private Comment parentCommentId;
+    private Comment parentComment;
 
 
     @Builder
-    public Comment(Post post, User user, String commentText, Comment parentCommentId) {
+    public Comment(Post post, User user, String commentText, Comment parentComment) {
         this.post = post;
         this.user = user;
         this.commentText = commentText;
-        this.parentCommentId = parentCommentId;
+        this.parentComment = parentComment;
     }
 }
