@@ -1,5 +1,6 @@
 package com.github.njm1250.blog.controller;
 
+import com.github.njm1250.blog.dto.CommentDto;
 import com.github.njm1250.blog.dto.PostDto;
 import com.github.njm1250.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Controller
 public class BlogController {
@@ -25,7 +27,9 @@ public class BlogController {
     public String postDetail(@RequestParam(name = "postId") Long postId, Model model) {
         try {
             PostDto postDto = postService.getPostDtoById(postId);
+            List<CommentDto> commentDtoList = postService.getCommentDtoListByPostId(postId);
             model.addAttribute("post", postDto);
+            model.addAttribute("comments", commentDtoList);
             return "postDetail";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());

@@ -65,9 +65,25 @@ public class PostServiceImpl implements PostService {
         return savedComment;
     }
 
+    @Override
+    public List<CommentDto> getCommentDtoListByPostId(Long postId) {
+        // TODO 대댓글 기능 추가
+        List<CommentDto> results = commentRepository.findCommentsByPostId(postId);
+        return results.stream()
+                .map(result -> {
+                    return CommentDto.builder()
+                            .postId(result.getPostId())
+                            .userId(result.getUserId())
+                            .commentText(result.getCommentText())
+                            .commentDate(result.getCommentDate())
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
     // 관리자가 작성한 글 조회
     @Override
-    public List<PostDto> getPostDtosByAdmin() {
+    public List<PostDto> getPostDtoListByAdmin() {
         List<Object[]> results = postRepository.findPostsByAdminUsers();
         return results.stream()
                 .map(result -> {

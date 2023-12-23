@@ -40,7 +40,7 @@ public class PostController {
     // 블로그 관리자가 작성한 글 조회
     @GetMapping("/getPosts")
     public ResponseEntity<List<PostDto>> getPosts() {
-        List<PostDto> postDtos = postService.getPostDtosByAdmin();
+        List<PostDto> postDtos = postService.getPostDtoListByAdmin();
         return ResponseEntity.ok(postDtos);
     }
 

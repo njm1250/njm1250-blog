@@ -13,8 +13,9 @@ import java.util.Optional;
 
 public interface PostService {
 
-    List<PostDto> getPostDtosByAdmin();
+    List<PostDto> getPostDtoListByAdmin();
     PostDto getPostDtoById(Long postId);
+    List<CommentDto> getCommentDtoListByPostId(Long postId);
     Post createPost(PostDto postDto, UserDto userDto);
     Comment createComment(CommentDto commentDto, UserDto userDto);
 }
