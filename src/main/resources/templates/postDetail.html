@@ -102,22 +102,19 @@
 
     <section class="comments-section">
         <h2>댓글</h2>
-
         <!-- 댓글 등록창 -->
         <form id="commentForm" onsubmit="event.preventDefault(); submitComment();">
             <input type="hidden" id="postId" name="postId" th:value="${post.postId}">
             <textarea id="commentText" name="commentText" rows="4" placeholder="댓글을 입력하세요..." required></textarea>
             <input type="submit" value="댓글 등록">
         </form>
-
         <!-- 댓글 목록 -->
-        <div th:each="comment : ${comments}">  <!-- 수정된 부분 -->
+        <div th:each="comment : ${comments}">
             <div class="comment">
                 <div class="comment-body" th:text="${comment.commentText}">이곳에 댓글 내용이 들어갑니다.</div>
                 <div class="comment-metadata">
-                    작성자: <span>작성자 이름</span> |
-<!--                    작성자: <span th:text="${comment.username}">작성자 이름</span> |  &lt;!&ndash; 수정된 부분 &ndash;&gt;-->
-                    작성일: <span th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}">작성일</span>  <!-- 수정된 부분 -->
+                    작성자: <span th:text="${comment.username}">작성자 이름</span> |
+                    작성일: <span th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}">작성일</span>
                 </div>
             </div>
         </div>

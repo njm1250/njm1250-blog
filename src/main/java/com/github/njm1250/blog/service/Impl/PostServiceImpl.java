@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -72,16 +73,22 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<CommentDto> getCommentDtoListByPostId(Long postId) {
         // TODO 대댓글 기능 추가
-        List<Comment> results = commentRepository.findCommentsByPostId(postId);
-        return results.stream()
-                .map(result -> {
-                    return CommentDto.builder()
-                            .postId(result.getPost().getPostId())
-                            .userId(result.getUser().getUserId())
-                            .commentText(result.getCommentText())
-                            .commentDate(result.getCommentDate())
-                            .build();
-                })
+        List<Comment> comments = commentRepository.findCommentsByPostId(postId);
+        // 모든 유저 ID 추출
+        List<Long> userIds = comments.stream()
+                .map(comment -> comment.getUser().getUserId())
+                .collect(Collectors.toList());
+        // 유저 ID에 해당하는 유저 이름 조회
+        Map<Long, String> userNameMap = userRepository.findByUserIdIn(userIds).stream()
+                .collect(Collectors.toMap(User::getUserId, User::getUsername));
+        return comments.stream()
+                .map(comment -> CommentDto.builder()
+                        .postId(comment.getPost().getPostId())
+                        .userId(comment.getUser().getUserId())
+                        .username(userNameMap.get(comment.getUser().getUserId())) // 사용자 이름
+                        .commentText(comment.getCommentText())
+                        .commentDate(comment.getCommentDate())
+                        .build())
                 .collect(Collectors.toList());
     }
 
