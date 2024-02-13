@@ -2,7 +2,7 @@
 
 ## 🚀 프로젝트 개요
 
-이 부분에 프로젝트의 목적, 주요 기능 등 프로젝트에 대한 간략한 설명을 추가합니다.
+개인 블로그
 
 ## 🛠 기술 스택
 
@@ -17,14 +17,6 @@
 **Frontend**
 - ![HTML](https://img.shields.io/badge/HTML-5-red)
 - ![JavaScript](https://img.shields.io/badge/JavaScript-latest-yellow)
-
-- 
-
-## 🔧 설치 및 실행 방법
-
-1. **레포지토리 클론하기**
-   ```bash
-   git clone [레포지토리 주소]
 
 ## 📝 커밋 컨벤션
 
@@ -41,15 +33,5 @@
 - `chore`: 🧹 빌드 업무 수정, 패키지 매니저 수정
 - `rename`: 🏷 파일 혹은 폴더명을 수정만 한 경우
 - `remove`: 🗑 파일을 삭제만 한 경우
-
-## 📜 API 명세서
-
-- [POST] `/api/v1/users/signup` : 회원가입
-- [POST] `/api/v1/users/login` : 로그인
-- [POST] `/api/v1/users/logout` : 로그아웃
-- [GET]  `/api/v1/users/status` : 로그인 정보를 세션에 저장
-- [POST] `/api/v1/blog/post` : 글 등록
-- [POST] `/api/v1/blog/getPosts` : 작성 글 조회
----
 
 
